@@ -1,6 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
+import {
+  ProfileContainer,
+  FormContainer,
+  FrameForm,
+  Input,
+  Button,
+  InputName,
+  WrapRow,
+  InputFile,
+} from "./commonPages";
+import ReactRoundedImage from "react-rounded-image";
+import profileBlank from "../../src/images/blank-profile-picture.png";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import IconButton from "@material-ui/core/IconButton";
 
 const CompanyPage = () => {
   const [company, setCompany] = useState({
@@ -38,106 +52,98 @@ const CompanyPage = () => {
   };
 
   return (
-    <div style={{ marginTop: 200 }}>
-      <FormContainer onSubmit={submitChanges} encType="multipart/form-data">
-        <Input
-          type="text"
-          placeholder="Company Name"
-          value={company.companyName}
-          onChange={(data) => {
-            setCompany({ ...company, companyName: data.target.value });
-          }}
-        />
-        <Input
-          type="text"
-          placeholder="Company Address"
-          value={company.companyAdress}
-          onChange={(data) => {
-            setCompany({ ...company, companyAdress: data.target.value });
-          }}
-        />
-        <Input
-          type="text"
-          placeholder="City"
-          value={company.city}
-          onChange={(data) => {
-            setCompany({ ...company, city: data.target.value });
-          }}
-        />
-        <Input
-          type="phone"
-          placeholder="050-123-4567"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          value={company.phone}
-          onChange={(data) => {
-            setCompany({ ...company, phone: data.target.value });
-          }}
-        />
-        <Input
-          type="email"
-          placeholder="Email"
-          value={company.email}
-          onChange={(data) => {
-            setCompany({ ...company, email: data.target.value });
-          }}
-        />
+    <ProfileContainer>
+      <FrameForm>
+        <FormContainer onSubmit={submitChanges} encType="multipart/form-data">
+          <WrapRow>
+            <ReactRoundedImage
+              image={profileBlank}
+              roundedColor="#447FFF"
+              imageWidth="150"
+              imageHeight="150"
+              roundedSize="0"
+              hoverColor="black"
+            />
 
-        <Input
-          type="text"
-          placeholder="Website"
-          value={company.website}
-          onChange={(data) => {
-            setCompany({ ...company, website: data.target.value });
-          }}
-        />
-        <Input
-          type="file"
-          placeholder="Choose Picture"
-          onChange={onChangeFilePic}
-        />
-        <Button type="submit">Save Changes</Button>
-      </FormContainer>
-    </div>
+            <InputFile
+              type="file"
+              placeholder="Edit"
+              onChange={onChangeFilePic}
+              style={{ display: "none" }}
+            />
+            <label htmlFor="icon-button-file">
+              <IconButton
+                color="#447FFF"
+                aria-label="upload picture"
+                component="span"
+              >
+                <PhotoCamera />
+              </IconButton>
+            </label>
+            <div>
+              <InputName
+                type="text"
+                placeholder="Company Name"
+                value={company.companyName}
+                onChange={(data) => {
+                  setCompany({ ...company, companyName: data.target.value });
+                }}
+              />
+              <InputName
+                type="text"
+                placeholder="Company Address"
+                value={company.companyAdress}
+                onChange={(data) => {
+                  setCompany({ ...company, companyAdress: data.target.value });
+                }}
+              />
+            </div>
+          </WrapRow>
+
+          <Input
+            type="text"
+            placeholder="City"
+            value={company.city}
+            onChange={(data) => {
+              setCompany({ ...company, city: data.target.value });
+            }}
+          />
+          <Input
+            type="phone"
+            placeholder="050-123-4567"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            value={company.phone}
+            onChange={(data) => {
+              setCompany({ ...company, phone: data.target.value });
+            }}
+          />
+          <Input
+            type="email"
+            placeholder="Email"
+            value={company.email}
+            onChange={(data) => {
+              setCompany({ ...company, email: data.target.value });
+            }}
+          />
+
+          <Input
+            type="text"
+            placeholder="Website"
+            value={company.website}
+            onChange={(data) => {
+              setCompany({ ...company, website: data.target.value });
+            }}
+          />
+          <Input
+            type="file"
+            placeholder="Choose Picture"
+            onChange={onChangeFilePic}
+          />
+          <Button type="submit">Save Changes</Button>
+        </FormContainer>
+      </FrameForm>
+    </ProfileContainer>
   );
 };
-
-const CompanyContainer = styled.div``;
-
-const Button = styled.button`
-  color: rgb(68, 127, 255);
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid rgb(68, 127, 255);
-  border-radius: 3px;
-`;
-
-const FormContainer = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
-`;
-
-const Input = styled.input`
-  width: 100%;
-  height: 42px;
-  outline: none;
-  border: 1px solid rgba(200, 200, 200, 0.3);
-  padding: 0px 10px;
-  border-bottom: 1.4px solid transparent;
-  transition: all 200ms ease-in-out;
-  font-size: 12px;
-  &::placeholder {
-    color: rgba(200, 200, 200, 1);
-  }
-  &:not(:last-of-type) {
-    border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
-  }
-  &:focus {
-    outline: none;
-    border-bottom: 2px solid rgb(68, 127, 255);
-  }
-`;
 
 export default CompanyPage;
