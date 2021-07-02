@@ -7,11 +7,14 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import ReactRoundedImage from "react-rounded-image";
+import profileBlank from "../../src/images/profile-company-blank.jpg";
+import { WrapRow } from "../Pages/commonPages";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    color: theme.palette.common.black,
+    fontWeight: 700,
   },
   body: {
     fontSize: 14,
@@ -26,16 +29,35 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(id, companyName, phone, website, address, contactPhone) {
+  return { id, companyName, phone, website, address, contactPhone };
 }
 
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
+  createData(
+    "123",
+    "Stam Company 1",
+    "0504022208",
+    "stam.co.il",
+    "Ktovet Stam 123",
+    "0504022208"
+  ),
+  createData(
+    "1234",
+    "Stam Company 1",
+    "0504022208",
+    "stam.co.il",
+    "Ktovet Stam 123",
+    "0504022208"
+  ),
+  createData(
+    "12345",
+    "Stam Company 1",
+    "0504022208",
+    "stam.co.il",
+    "Ktovet Stam 123",
+    "0504022208"
+  ),
 ];
 
 const useStyles = makeStyles({
@@ -45,30 +67,45 @@ const useStyles = makeStyles({
 });
 
 export default function CustomizedTables() {
-  const classes = useStyles();
-
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+      <Table size="small" aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell>Company Name</StyledTableCell>
+            <StyledTableCell>Phone</StyledTableCell>
+            <StyledTableCell>Website</StyledTableCell>
+            <StyledTableCell>Address</StyledTableCell>
+            <StyledTableCell>Contact Phone</StyledTableCell>
+            <StyledTableCell>Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                <b>{row.id}</b>
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell>
+                <WrapRow>
+                  <ReactRoundedImage
+                    image={profileBlank}
+                    roundedColor="#447FFF"
+                    imageWidth="40"
+                    imageHeight="40"
+                    roundedSize="0"
+                    hoverColor="black"
+                  />
+                  <div style={{ marginLeft: 10 }}>
+                    <b>{row.companyName}</b>
+                  </div>
+                </WrapRow>
+              </StyledTableCell>
+              <StyledTableCell>{row.phone}</StyledTableCell>
+              <StyledTableCell>{row.website}</StyledTableCell>
+              <StyledTableCell>{row.address}</StyledTableCell>
+              <StyledTableCell>{row.contactPhone}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

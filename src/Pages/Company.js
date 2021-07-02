@@ -12,7 +12,7 @@ import {
   InputFile,
 } from "./commonPages";
 import ReactRoundedImage from "react-rounded-image";
-import profileBlank from "../../src/images/blank-profile-picture.png";
+import profileBlank from "../../src/images/profile-company-blank.jpg";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import IconButton from "@material-ui/core/IconButton";
 
