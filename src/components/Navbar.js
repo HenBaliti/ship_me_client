@@ -21,7 +21,7 @@ const Navbar = () => {
     <WrappNavs>
       <Nav>
         <ShoppingCartIcon style={{ fill: "yellow" }} />
-        <Logo href="">Ship-ME</Logo>
+        <Logo href="/">Ship-ME</Logo>
         <LineDivider></LineDivider>
         <Hamburger onClick={() => setIsOpen(!isOpen)}>
           <span />

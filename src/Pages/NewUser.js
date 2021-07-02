@@ -1,8 +1,8 @@
 import React from "react";
 import CompUserForm from "../components/UserFormComp";
 
-const ProfilePage = () => {
+const NewUserPage = () => {
   return <CompUserForm></CompUserForm>;
 };
 
-export default ProfilePage;
+export default NewUserPage;

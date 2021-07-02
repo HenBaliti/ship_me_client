@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactRoundedImage from "react-rounded-image";
 import profileBlank from "../../src/images/blank-profile-picture.png";
 import SearchIcon from "@material-ui/icons/Search";
-import { Button } from "./commonPages";
+import { Link } from "react-router-dom";
 
 const AccountPage = () => {
   return (
@@ -20,7 +20,7 @@ const AccountPage = () => {
               <SearchBarInput type="text" placeholder="Search Users" />
               <SearchIcon />
             </SearchBarUsers>
-            <Button>Add User</Button>
+            <Button to="/createnewuser">Add User</Button>
           </TwoInRow>
           <UserDiv>
             <TwoInRow>
@@ -172,6 +172,19 @@ const UserDiv = styled.div`
   background: white;
   width: 80%;
   height: 100%;
+`;
+
+export const Button = styled(Link)`
+  width: 15%;
+  color: white;
+  font-size: 0.9em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid #096f9f;
+  background-color: #096f9f;
+  border-radius: 3px;
+  align-items: center;
+  text-decoration: none;
 `;
 
 export default AccountPage;

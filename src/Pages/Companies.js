@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import CustomizedTables from "../components/TabelCustComp";
 import SearchIcon from "@material-ui/icons/Search";
+import { Link } from "react-router-dom";
 
 const CompaniesPage = () => {
   return (
@@ -11,7 +12,7 @@ const CompaniesPage = () => {
           <SearchBarInput type="text" placeholder="Search Users" />
           <SearchIcon />
         </SearchBarCompanies>
-        <Button>Add New Company</Button>
+        <Button to="/createnewcompany">Add New Company</Button>
       </WrapRowSpace>
       <br></br>
       <br></br>
@@ -34,8 +35,8 @@ export const WrapRowSpace = styled.form`
   align-items: flex-end;
 `;
 
-export const Button = styled.button`
-  width: 20%;
+export const Button = styled(Link)`
+  width: 15%;
   color: white;
   font-size: 0.9em;
   margin: 1em;
@@ -44,6 +45,7 @@ export const Button = styled.button`
   background-color: #096f9f;
   border-radius: 3px;
   align-items: center;
+  text-decoration: none;
 `;
 
 export const SearchBarInput = styled.input`
