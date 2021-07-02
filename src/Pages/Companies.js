@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const CompaniesPage = () => {
   return (
-    <CompaniesContainer style={{ marginTop: 100 }}>
+    <CompaniesContainer>
       <h1>Companies</h1>
     </CompaniesContainer>
   );

@@ -134,11 +134,6 @@ const CompanyPage = () => {
               setCompany({ ...company, website: data.target.value });
             }}
           />
-          <Input
-            type="file"
-            placeholder="Choose Picture"
-            onChange={onChangeFilePic}
-          />
           <Button type="submit">Save Changes</Button>
         </FormContainer>
       </FrameForm>

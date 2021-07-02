@@ -10,12 +10,13 @@ export const FrameForm = styled.div`
 `;
 
 export const Button = styled.button`
-  width: 20%;
-  color: rgb(68, 127, 255);
-  font-size: 1em;
+  width: 30%;
+  color: white;
+  font-size: 0.9em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid rgb(68, 127, 255);
+  border: 2px solid #096f9f;
+  background-color: #096f9f;
   border-radius: 3px;
   align-items: center;
 `;
