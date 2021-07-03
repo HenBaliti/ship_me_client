@@ -3,21 +3,25 @@ import styled from "styled-components";
 import CustomizedTables from "../components/TabelCustComp";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const CompaniesPage = () => {
   return (
-    <CompaniesContainer>
-      <WrapRowSpace>
-        <SearchBarCompanies className="ui search">
-          <SearchBarInput type="text" placeholder="Search Users" />
-          <SearchIcon />
-        </SearchBarCompanies>
-        <Button to="/createnewcompany">Add New Company</Button>
-      </WrapRowSpace>
-      <br></br>
-      <br></br>
-      <CustomizedTables></CustomizedTables>
-    </CompaniesContainer>
+    <div>
+      <Navbar />
+      <CompaniesContainer>
+        <WrapRowSpace>
+          <SearchBarCompanies className="ui search">
+            <SearchBarInput type="text" placeholder="Search Users" />
+            <SearchIcon />
+          </SearchBarCompanies>
+          <Button to="/createnewcompany">Add New Company</Button>
+        </WrapRowSpace>
+        <br></br>
+        <br></br>
+        <CustomizedTables></CustomizedTables>
+      </CompaniesContainer>
+    </div>
   );
 };
 
