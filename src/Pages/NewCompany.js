@@ -2,7 +2,7 @@ import React from "react";
 import CompanyForm from "../components/CompanyFormComp";
 import Navbar from "../components/Navbar";
 
-const CompanyPage = () => {
+const NewCompanyPage = () => {
   return (
     <div>
       <Navbar />
@@ -11,4 +11,4 @@ const CompanyPage = () => {
   );
 };
 
-export default CompanyPage;
+export default NewCompanyPage;

@@ -80,3 +80,11 @@ export const SubmitButton = styled.button`
     filter: brightness(1.03);
   }
 `;
+
+export const divUser = styled.div`
+  width: 100%;
+  display: flex;
+  border-width: thick;
+  border-color: green;
+  border-style: solid;
+`;

@@ -6,7 +6,6 @@ import {
   Input,
   MutedLink,
   SubmitButton,
-  Button,
 } from "./common";
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";

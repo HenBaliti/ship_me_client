@@ -2,7 +2,7 @@ import React from "react";
 import CompUserForm from "../components/UserFormComp";
 import Navbar from "../components/Navbar";
 
-const ProfilePage = () => {
+const NewUserPage = () => {
   return (
     <div>
       <Navbar />
@@ -11,4 +11,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default NewUserPage;
