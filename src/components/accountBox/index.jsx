@@ -4,6 +4,7 @@ import { LoginForm } from "./loginForm";
 import { motion } from "framer-motion";
 import { AccountContext } from "./accountContext";
 import { SignupForm } from "./signupForm";
+import { CompanyChooseForm } from "./companyChooseForm";
 
 const BoxContainer = styled.div`
   width: 380px;
@@ -15,6 +16,14 @@ const BoxContainer = styled.div`
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
   position: relative;
   overflow: hidden;
+`;
+
+const CenteringTheBox = styled.div`
+  position: absolute;
+  top: 15%;
+  left: 40%;
+  margin-top: -50px;
+  margin-left: -50px;
 `;
 
 const TopContainer = styled.div`
@@ -49,6 +58,7 @@ const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const HeaderText = styled.h2`
@@ -122,38 +132,55 @@ export function AccountBox(props) {
     }, 400);
   };
 
-  const contextValue = { switchToSignup, switchToSignin };
+  const switchToCompanies = () => {
+    playExpandingAnimation();
+    setTimeout(() => {
+      setActive("companies");
+    }, 400);
+  };
+
+  const contextValue = { switchToSignup, switchToSignin, switchToCompanies };
 
   return (
     <AccountContext.Provider value={contextValue}>
-      <BoxContainer>
-        <TopContainer>
-          <BackDrop
-            initial={false}
-            animate={isExpanded ? "expanded" : "collapsed"}
-            variants={backdropVariants}
-            transition={expandingTransition}
-          />
-          {active === "signin" && (
-            <HeaderContainer>
-              <HeaderText>Welcome</HeaderText>
-              <HeaderText>Back</HeaderText>
-              <SmallText>Please sign-in to continue!</SmallText>
-            </HeaderContainer>
-          )}
-          {active === "signup" && (
-            <HeaderContainer>
-              <HeaderText>Create</HeaderText>
-              <HeaderText>Account</HeaderText>
-              <SmallText>Please sign-up to continue!</SmallText>
-            </HeaderContainer>
-          )}
-        </TopContainer>
-        <InnerContainer>
-          {active === "signin" && <LoginForm />}
-          {active === "signup" && <SignupForm />}
-        </InnerContainer>
-      </BoxContainer>
+      <CenteringTheBox>
+        <BoxContainer>
+          <TopContainer>
+            <BackDrop
+              initial={false}
+              animate={isExpanded ? "expanded" : "collapsed"}
+              variants={backdropVariants}
+              transition={expandingTransition}
+            />
+            {active === "signin" && (
+              <HeaderContainer>
+                <HeaderText>Welcome</HeaderText>
+                <HeaderText>Back</HeaderText>
+                <SmallText>Please sign-in to continue!</SmallText>
+              </HeaderContainer>
+            )}
+            {active === "signup" && (
+              <HeaderContainer>
+                <HeaderText>Create</HeaderText>
+                <HeaderText>Account</HeaderText>
+                <SmallText>Please sign-up to continue!</SmallText>
+              </HeaderContainer>
+            )}
+            {active === "companies" && (
+              <HeaderContainer>
+                <HeaderText>Choose</HeaderText>
+                <HeaderText>Company</HeaderText>
+                <SmallText>Please choose your company for login.</SmallText>
+              </HeaderContainer>
+            )}
+          </TopContainer>
+          <InnerContainer>
+            {active === "signin" && <LoginForm />}
+            {active === "signup" && <SignupForm />}
+            {active === "companies" && <CompanyChooseForm />}
+          </InnerContainer>
+        </BoxContainer>
+      </CenteringTheBox>
     </AccountContext.Provider>
   );
 }

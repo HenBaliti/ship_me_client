@@ -9,6 +9,26 @@ export const Button = styled.button`
   border-radius: 3px;
 `;
 
+export const SelectCustome = styled.select`
+  width: 50%;
+  height: 35px;
+  background: #ffffff;
+  color: gray;
+  padding-left: 5px;
+  font-size: 14px;
+
+  margin-left: 10px;
+
+  option {
+    color: black;
+    background: white;
+    display: flex;
+    white-space: pre;
+    min-height: 20px;
+    padding: 0px 2px 1px;
+  }
+`;
+
 export const BoxContainer = styled.div`
   width: 100%;
   display: flex;

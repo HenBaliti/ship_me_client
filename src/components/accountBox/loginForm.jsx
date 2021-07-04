@@ -9,7 +9,6 @@ import {
 } from "./common";
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../state/actions/authActions";
 
@@ -19,21 +18,23 @@ export function LoginForm(props) {
   const { loading, isAuth, userObj, error } = useSelector(
     (state) => state.LoginAuth
   );
-  let history = useHistory();
 
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const { switchToSignup } = useContext(AccountContext);
+  const { switchToSignup, switchToCompanies } = useContext(AccountContext);
 
   const submitLogin = () => {
     dispatch(login(user.email, user.password));
-    history.push("/choose");
+    if (isAuth) {
+      switchToCompanies();
+    }
   };
 
   return (
     <BoxContainer>
+      <Marginer direction="vertical" margin={30} />
       <FormContainer>
         <Input
           type="email"

@@ -75,6 +75,7 @@ export function SignupForm(props) {
 
   return (
     <BoxContainer>
+      <Marginer direction="vertical" margin={30} />
       <FormContainer>
         <Input
           type="text"
@@ -141,6 +142,7 @@ export function SignupForm(props) {
           Signin
         </BoldLink>
       </MutedLink>
+      <Marginer direction="vertical" margin={30} />
     </BoxContainer>
   );
 }
