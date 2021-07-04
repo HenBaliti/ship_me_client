@@ -8,8 +8,6 @@ import {
 //Get All Companies of specific user
 export const getCompanies = () => async (dispatch) => {
   try {
-    console.log("This is the Token:");
-    console.log(localStorage.getItem("userToken"));
     dispatch({ type: GET_COMPANIES_REQ });
 
     const { data } = await axios.get(

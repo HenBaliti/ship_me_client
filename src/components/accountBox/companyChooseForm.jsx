@@ -2,16 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCompanies } from "../../state/actions/companiesActions";
 import {
-  BoldLink,
   BoxContainer,
   FormContainer,
-  Input,
-  MutedLink,
   SubmitButton,
   SelectCustome,
 } from "./common";
 import { Marginer } from "../marginer";
-import { AccountContext } from "./accountContext";
 import { useHistory } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { login } from "../../state/actions/authActions";
@@ -20,7 +16,7 @@ export function CompanyChooseForm(props) {
   //Redux - dispatch
   const dispatch = useDispatch();
 
-  const { loading, arrayOfCompanies, error } = useSelector(
+  const { arrayOfCompanies, error } = useSelector(
     (state) => state.GetCompaniesForUser
   );
   let history = useHistory();
