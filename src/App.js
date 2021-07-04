@@ -5,12 +5,7 @@ import ProfilePage from "./Pages/Profile";
 import AccountPage from "./Pages/AccountPage";
 import CompanyPage from "./Pages/Company";
 import CompaniesPage from "./Pages/Companies";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NewUserPage from "./Pages/NewUser";
 import NewCompanyPage from "./Pages/NewCompany";
 

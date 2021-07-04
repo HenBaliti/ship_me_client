@@ -7,7 +7,7 @@ import {
   REGISTER_FAIL,
 } from "../action-types/auth";
 
-export const loginReducer = (state = { user: {} }, action) => {
+export const loginReducer = (state = { userObj: {} }, action) => {
   switch (action.type) {
     case LOGIN_REQ:
       return {
@@ -19,14 +19,14 @@ export const loginReducer = (state = { user: {} }, action) => {
         ...state,
         loading: false,
         isAuth: true,
-        user: action.payload,
+        userObj: action.payload,
       };
     case LOGIN_FAIL:
       return {
         ...state,
         loading: false,
         isAuth: false,
-        user: null,
+        userObj: null,
         error: action.payload,
       };
     default:
@@ -46,14 +46,14 @@ export const registerReducer = (state = { user: {} }, action) => {
         ...state,
         loading: false,
         isAuth: true,
-        user: action.payload,
+        userObj: action.payload,
       };
     case REGISTER_FAIL:
       return {
         ...state,
         loading: false,
         isAuth: false,
-        user: null,
+        userObj: null,
         error: action.payload,
       };
     default:

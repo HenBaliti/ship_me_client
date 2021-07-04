@@ -9,26 +9,31 @@ import {
 } from "./common";
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../state/actions/authActions";
 
 export function LoginForm(props) {
+  //Redux - dispatch
+  const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.LoginAuth);
+
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const { switchToSignup } = useContext(AccountContext);
+  const { switchToSignup, switchToCompanies } = useContext(AccountContext);
 
-  const submitChanges = (e) => {
-    e.preventDefault();
-
-    //axios->...
-    // axios
-    // .post(`${serverApi}/login`, user)
-    // .catch((error) => console.log(error));
+  const submitLogin = () => {
+    dispatch(login(user.email, user.password));
+    if (isAuth) {
+      switchToCompanies();
+    }
   };
 
   return (
     <BoxContainer>
-      <FormContainer onSubmit={submitChanges}>
+      <Marginer direction="vertical" margin={30} />
+      <FormContainer>
         <Input
           type="email"
           placeholder="Email"
@@ -49,7 +54,7 @@ export function LoginForm(props) {
       <Marginer direction="vertical" margin={10} />
 
       <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit">Signin</SubmitButton>
+      <SubmitButton onClick={submitLogin}>Signin</SubmitButton>
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
         Don't have an accoun?{" "}
