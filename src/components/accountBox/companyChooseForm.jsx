@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCompanies } from "../../state/actions/companiesActions";
+import {
+  getCompanies,
+  getCompanyData,
+} from "../../state/actions/companiesActions";
 import {
   BoxContainer,
   FormContainer,
@@ -9,16 +12,20 @@ import {
 } from "./common";
 import { Marginer } from "../marginer";
 import { useHistory } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { login } from "../../state/actions/authActions";
 
 export function CompanyChooseForm(props) {
   //Redux - dispatch
   const dispatch = useDispatch();
 
+  const { loading, companyData } = useSelector((state) => state.GetCompanyData);
+
   const { arrayOfCompanies, error } = useSelector(
     (state) => state.GetCompaniesForUser
   );
+
+  //state company managment
+  const [companyChoose, setCompanyChoose] = useState("");
+
   let history = useHistory();
 
   useEffect(() => {
@@ -29,8 +36,13 @@ export function CompanyChooseForm(props) {
   }, []);
 
   const submitCompany = () => {
-    // dispatch(login(user.email, user.password));
-    // history.push("/choose");
+    dispatch(getCompanyData(companyChoose));
+    history.push("/");
+  };
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setCompanyChoose(event.target.value);
   };
 
   if (!arrayOfCompanies) {
@@ -44,7 +56,13 @@ export function CompanyChooseForm(props) {
         <Marginer direction="vertical" margin={20} />
         <div>
           <label for="cars">Company Name:</label>
-          <SelectCustome name="companies" id="companies">
+          <SelectCustome
+            name="companies"
+            id="companies"
+            onChange={handleChange}
+            value={companyChoose}
+          >
+            <option value="No Company Choose">Choose Company</option>
             {arrayOfCompanies.map((company) => {
               return <option value={company._id}>{company.name}</option>;
             })}

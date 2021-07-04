@@ -2,12 +2,16 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { loginReducer, registerReducer } from "./reducer/authReducer";
-import { getCompaniesReducer } from "./reducer/companiesReducers";
+import {
+  getCompaniesReducer,
+  getCompanyDataReducer,
+} from "./reducer/companiesReducers";
 
 const shipMeState = combineReducers({
   LoginAuth: loginReducer,
   RegisterAuth: registerReducer,
   GetCompaniesForUser: getCompaniesReducer,
+  GetCompanyData: getCompanyDataReducer,
 });
 
 //Saving the redux state to local storage and updates the redux managment

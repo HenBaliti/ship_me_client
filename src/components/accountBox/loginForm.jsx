@@ -15,9 +15,7 @@ import { login } from "../../state/actions/authActions";
 export function LoginForm(props) {
   //Redux - dispatch
   const dispatch = useDispatch();
-  const { loading, isAuth, userObj, error } = useSelector(
-    (state) => state.LoginAuth
-  );
+  const { isAuth } = useSelector((state) => state.LoginAuth);
 
   const [user, setUser] = useState({
     email: "",
