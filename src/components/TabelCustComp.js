@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import ReactRoundedImage from "react-rounded-image";
 import profileBlank from "../../src/images/profile-company-blank.jpg";
 import { WrapRow } from "../Pages/commonPages";
+import MenuListCompositionCompany from "./DotsCompCompany";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -106,6 +107,9 @@ export default function CustomizedTables() {
               <StyledTableCell>{row.website}</StyledTableCell>
               <StyledTableCell>{row.address}</StyledTableCell>
               <StyledTableCell>{row.contactPhone}</StyledTableCell>
+              <StyledTableCell>
+                <MenuListCompositionCompany />
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

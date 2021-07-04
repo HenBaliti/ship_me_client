@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ProfileContainer,
   FormContainer,
@@ -13,43 +13,61 @@ import ReactRoundedImage from "react-rounded-image";
 import profileBlank from "../images/blank-profile-picture.png";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import IconButton from "@material-ui/core/IconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserData, updateUser } from "../state/actions/userActions";
+import { login } from "../state/actions/authActions";
 
 const CompUserForm = (props) => {
+  //Redux - dispatch
+  const dispatch = useDispatch();
+  const { updatedUser, loading, error, isUpdated } = useSelector(
+    (state) => state.UpdateUserProfile
+  );
+
   const [newuser, setNewUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
-    userAvatar: "",
+    userID: props.userID,
+    firstName: props.firstName,
+    lastName: props.lastName,
+    jobTitle: props.jobTitle,
+    email: props.email,
+    phone: props.phone,
+    oldPassword: props.password,
+    newPassword: "",
+    userAvatar: props.avatar,
   });
+
+  useEffect(() => {
+    if (error) {
+      console.log("There is and error with update user");
+    }
+  }, [isUpdated, error]);
 
   const onChangeFilePic = (e) => {
     setNewUser({ ...newuser, userAvatar: e.target.files[0] });
   };
 
-  const submitChanges = (e) => {
-    e.preventDefault();
-    //Building the form Data - for sending to server
-    const formData = new FormData();
-
-    formData.append("firstName", newuser.firstName);
-    formData.append("lastName", newuser.lastName);
-    formData.append("email", newuser.email);
-    formData.append("phone", newuser.phone);
-    formData.append("password", newuser.passowrd);
-    formData.append("userAvatar", newuser.userAvatar);
-
-    //axios->...
-    // axios
-    // .post(`${serverApi}/editUser`, formData)
-    // .catch((error) => console.log(error));
+  const submitChanges = () => {
+    dispatch(
+      updateUser(
+        newuser.userID,
+        newuser.firstName,
+        newuser.lastName,
+        newuser.jobTitle,
+        newuser.email,
+        newuser.phone,
+        newuser.oldPassword,
+        newuser.newPassword
+      )
+    );
+    if (isUpdated) {
+      dispatch(getUserData());
+    }
   };
 
   return (
     <ProfileContainer>
       <FrameForm>
-        <FormContainer onSubmit={submitChanges} encType="multipart/form-data">
+        <FormContainer encType="multipart/form-data">
           <WrapRow>
             <ReactRoundedImage
               image={profileBlank}
@@ -95,10 +113,18 @@ const CompUserForm = (props) => {
             </div>
           </WrapRow>
 
+          <InputName
+            type="jobTitle"
+            placeholder="Job Title"
+            value={newuser.jobTitle}
+            onChange={(data) => {
+              setNewUser({ ...newuser, jobTitle: data.target.value });
+            }}
+          />
+
           <Input
             type="tel"
             placeholder="050-123-4567"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             value={newuser.phone}
             onChange={(data) => {
               setNewUser({ ...newuser, phone: data.target.value });
@@ -115,15 +141,22 @@ const CompUserForm = (props) => {
           />
 
           <Input
+            disabled="true"
             type="password"
-            placeholder="Password"
-            value={newuser.passowrd}
+            placeholder="Old Password"
+            value="12345678"
+          />
+
+          <Input
+            type="password"
+            placeholder="New Password"
+            value={newuser.newPassword}
             onChange={(data) => {
-              setNewUser({ ...newuser, passowrd: data.target.value });
+              setNewUser({ ...newuser, newPassword: data.target.value });
             }}
           />
 
-          <Button type="submit">Save Changes</Button>
+          <Button onClick={submitChanges}>Save Changes</Button>
         </FormContainer>
       </FrameForm>
     </ProfileContainer>

@@ -5,6 +5,7 @@ import profileBlank from "../../src/images/blank-profile-picture.png";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import MenuListComposition from "../components/DotsComp";
 
 const AccountPage = () => {
   return (
@@ -39,7 +40,9 @@ const AccountPage = () => {
                   <NameOfUser>Stam Shem</NameOfUser>
                   <EmailOfUser>stam@gmail.com</EmailOfUser>
                 </TwoInRow>
-                <div>asdasd</div>
+                <div>
+                  <MenuListComposition />
+                </div>
               </TwoInRow>
               <TwoInRow>
                 <JobInfoUser>stammmmmm</JobInfoUser>

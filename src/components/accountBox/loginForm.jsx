@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   BoldLink,
   BoxContainer,
@@ -11,6 +11,7 @@ import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../state/actions/authActions";
+import { getUserData } from "../../state/actions/userActions";
 
 export function LoginForm(props) {
   //Redux - dispatch
@@ -23,11 +24,15 @@ export function LoginForm(props) {
   });
   const { switchToSignup, switchToCompanies } = useContext(AccountContext);
 
-  const submitLogin = () => {
-    dispatch(login(user.email, user.password));
+  useEffect(() => {
     if (isAuth) {
       switchToCompanies();
+      dispatch(getUserData());
     }
+  }, [isAuth]);
+
+  const submitLogin = () => {
+    dispatch(login(user.email, user.password));
   };
 
   return (

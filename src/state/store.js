@@ -6,12 +6,15 @@ import {
   getCompaniesReducer,
   getCompanyDataReducer,
 } from "./reducer/companiesReducers";
+import { getUserDataReducers, updateUserReducer } from "./reducer/userReducer";
 
 const shipMeState = combineReducers({
   LoginAuth: loginReducer,
   RegisterAuth: registerReducer,
   GetCompaniesForUser: getCompaniesReducer,
   GetCompanyData: getCompanyDataReducer,
+  UpdateUserProfile: updateUserReducer,
+  GetUserData: getUserDataReducers,
 });
 
 //Saving the redux state to local storage and updates the redux managment
