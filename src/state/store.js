@@ -5,17 +5,27 @@ import { loginReducer, registerReducer } from "./reducer/authReducer";
 import {
   getCompaniesReducer,
   getCompanyDataReducer,
+  updateCompanyReducer,
 } from "./reducer/companiesReducers";
 import { getUserDataReducers, updateUserReducer } from "./reducer/userReducer";
 
-const shipMeState = combineReducers({
+const appReducer = combineReducers({
   LoginAuth: loginReducer,
   RegisterAuth: registerReducer,
   GetCompaniesForUser: getCompaniesReducer,
   GetCompanyData: getCompanyDataReducer,
   UpdateUserProfile: updateUserReducer,
   GetUserData: getUserDataReducers,
+  UpdateCompany: updateCompanyReducer,
 });
+
+const shipMeState = (state, action) => {
+  if (action.type === "LOGOUT_SUCCESS") {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
 
 //Saving the redux state to local storage and updates the redux managment
 function saveToLocalStorage(state = {}) {

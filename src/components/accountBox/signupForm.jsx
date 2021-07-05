@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   BoldLink,
   BoxContainer,
@@ -11,7 +11,9 @@ import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../state/actions/authActions";
+import { login, register } from "../../state/actions/authActions";
+import { getUserData } from "../../state/actions/userActions";
+import { getCompanyData } from "../../state/actions/companiesActions";
 
 export function SignupForm(props) {
   //Redux - dispatch
@@ -32,6 +34,15 @@ export function SignupForm(props) {
     job_title: "",
   });
 
+  useEffect(() => {
+    if (isAuth) {
+      history.push("/");
+      dispatch(login(newuser.email, newuser.password));
+      dispatch(getUserData());
+      dispatch(getCompanyData(userObj.companies[0]));
+    }
+  }, [isAuth]);
+
   const onChangeFilePic = (e) => {
     setNewUser({ ...newuser, userAvatar: e.target.files[0] });
   };
@@ -47,30 +58,6 @@ export function SignupForm(props) {
         newuser.job_title
       )
     );
-    history.push("/");
-
-    // e.preventDefault();
-    // //Building the form Data - for sending to server
-    // const formData = new FormData();
-
-    // formData.append("first_name", newuser.first_name);
-    // formData.append("last_name", newuser.last_name);
-    // formData.append("email", newuser.email);
-    // formData.append("phone", newuser.phone);
-    // formData.append("password", newuser.password);
-    // formData.append("job_title", newuser.job_title);
-    // formData.append("userAvatar", newuser.userAvatar);
-
-    // axios
-    //   .post(`http://localhost:4000/users/signup`, newuser)
-    //   .then((res) => {
-    //     console.log("Successfully Registered\n");
-    //     console.log(res.data);
-    //     history.push("/");
-    //   })
-    //   .catch((error) =>
-    //     console.log("There was an error with login \n" + error)
-    //   );
   };
 
   return (

@@ -10,12 +10,23 @@ import {
   Menu,
   Hamburger,
   LineDivider,
+  ButtonLogOut,
 } from "./NavBarCommon";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
+import { useDispatch } from "react-redux";
+import { logOut } from "../state/actions/authActions";
+import { useHistory } from "react-router";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const logOutClick = () => {
+    dispatch(logOut());
+    history.push("/auth");
+  };
   const [isOpen, setIsOpen] = useState(false);
   return (
     <WrappNavs>
@@ -41,6 +52,7 @@ const Navbar = () => {
         <NotificationsNoneOutlinedIcon
           style={{ fill: "white", flexDirection: "flex-end" }}
         />
+        <ButtonLogOut onClick={logOutClick}>LogOut</ButtonLogOut>
       </Nav>
       <Nav2>
         <Hamburger onClick={() => setIsOpen(!isOpen)}>

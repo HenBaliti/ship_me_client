@@ -12,11 +12,12 @@ import { AccountContext } from "./accountContext";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../state/actions/authActions";
 import { getUserData } from "../../state/actions/userActions";
+import { getCompanyData } from "../../state/actions/companiesActions";
 
 export function LoginForm(props) {
   //Redux - dispatch
   const dispatch = useDispatch();
-  const { isAuth } = useSelector((state) => state.LoginAuth);
+  const { isAuth, userObj } = useSelector((state) => state.LoginAuth);
 
   const [user, setUser] = useState({
     email: "",
@@ -28,6 +29,7 @@ export function LoginForm(props) {
     if (isAuth) {
       switchToCompanies();
       dispatch(getUserData());
+      dispatch(getCompanyData(userObj.companies[0]));
     }
   }, [isAuth]);
 
