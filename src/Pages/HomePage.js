@@ -10,7 +10,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (isAuth) {
-      dispatch(getCompanyData());
+      // dispatch(getCompanyData());////////////////////////////
     } else {
       return <div>You Have No ACCSESS</div>;
     }

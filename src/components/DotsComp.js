@@ -6,8 +6,19 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import { useDispatch } from "react-redux";
+import {
+  deleteUserAction,
+  getAllUsersOfCompany,
+  getUserDataByIDAction,
+} from "../state/actions/accountActions";
+import { useHistory } from "react-router-dom";
+import { getCompanyData } from "../state/actions/companiesActions";
 
-export default function MenuListComposition() {
+export default function MenuListComposition(props) {
+  let history = useHistory();
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -21,6 +32,18 @@ export default function MenuListComposition() {
     }
 
     setOpen(false);
+  };
+
+  const handleEditUser = (event) => {
+    dispatch(getUserDataByIDAction(props.userID));
+    handleClose(event);
+    history.push("/editUser");
+  };
+
+  const handleDeleteUser = (event) => {
+    dispatch(deleteUserAction(props.userID));
+    handleClose(event);
+    dispatch(getAllUsersOfCompany(props.companyID));
   };
 
   function handleListKeyDown(event) {
@@ -73,9 +96,8 @@ export default function MenuListComposition() {
                     id="menu-list-grow"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={handleEditUser}>Edit User</MenuItem>
+                    <MenuItem onClick={handleDeleteUser}>Delete User</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

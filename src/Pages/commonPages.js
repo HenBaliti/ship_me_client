@@ -2,6 +2,26 @@ import styled from "styled-components";
 
 //Styling
 
+export const SelectCustome = styled.select`
+  width: 15%;
+  height: 35px;
+  background: #ffffff;
+  color: gray;
+  padding-left: 5px;
+  font-size: 14px;
+
+  margin-left: 10px;
+
+  option {
+    color: black;
+    background: white;
+    display: flex;
+    white-space: pre;
+    min-height: 20px;
+    padding: 0px 2px 1px;
+  }
+`;
+
 export const ProfileContainer = styled.div`
   margin-top: 50px;
 `;

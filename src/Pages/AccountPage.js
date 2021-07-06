@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ReactRoundedImage from "react-rounded-image";
 import profileBlank from "../../src/images/blank-profile-picture.png";
@@ -6,8 +6,22 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import MenuListComposition from "../components/DotsComp";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsersOfCompany } from "../state/actions/accountActions";
 
 const AccountPage = () => {
+  //Redux - dispatch
+  const dispatch = useDispatch();
+  const { arrayOfManagers, loading, error, arrayOfUsers } = useSelector(
+    (state) => state.GetAllUsersCompany
+  );
+
+  const { companyData } = useSelector((state) => state.GetCompanyData);
+
+  useEffect(() => {
+    dispatch(getAllUsersOfCompany(companyData.companyData._id));
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -26,63 +40,79 @@ const AccountPage = () => {
               </SearchBarUsers>
               <Button to="/createnewuser">Add User</Button>
             </TwoInRow>
-            <UserDiv>
-              <TwoInRow>
-                <ReactRoundedImage
-                  image={profileBlank}
-                  roundedColor="#447FFF"
-                  imageWidth="30"
-                  imageHeight="30"
-                  roundedSize="0"
-                  hoverColor="black"
-                />
-                <TwoInRow>
-                  <NameOfUser>Stam Shem</NameOfUser>
-                  <EmailOfUser>stam@gmail.com</EmailOfUser>
-                </TwoInRow>
-                <div>
-                  <MenuListComposition />
-                </div>
-              </TwoInRow>
-              <TwoInRow>
-                <JobInfoUser>stammmmmm</JobInfoUser>
-                <ManagerTag>#Manager</ManagerTag>
-              </TwoInRow>
-            </UserDiv>
-            <UserDiv>
-              <TwoInRow>
-                <ReactRoundedImage
-                  image={profileBlank}
-                  roundedColor="#447FFF"
-                  imageWidth="30"
-                  imageHeight="30"
-                  roundedSize="0"
-                  hoverColor="black"
-                />
-                <TwoInRow>
-                  <NameOfUser>Stam Shem</NameOfUser>
-                  <EmailOfUser>stam@gmail.com</EmailOfUser>
-                </TwoInRow>
-              </TwoInRow>
-              <JobInfoUser>stammmmmm</JobInfoUser>
-            </UserDiv>
-            <UserDiv>
-              <TwoInRow>
-                <ReactRoundedImage
-                  image={profileBlank}
-                  roundedColor="#447FFF"
-                  imageWidth="30"
-                  imageHeight="30"
-                  roundedSize="0"
-                  hoverColor="black"
-                />
-                <TwoInRow>
-                  <NameOfUser>Stam Shem</NameOfUser>
-                  <EmailOfUser>stam@gmail.com</EmailOfUser>
-                </TwoInRow>
-              </TwoInRow>
-              <JobInfoUser>stammmmmm</JobInfoUser>
-            </UserDiv>
+
+            {
+              /////// managers ///////
+              arrayOfManagers != null
+                ? arrayOfManagers.map((manager) => {
+                    return (
+                      <UserDiv>
+                        <TwoInRow>
+                          <ReactRoundedImage
+                            image={profileBlank}
+                            roundedColor="#447FFF"
+                            imageWidth="30"
+                            imageHeight="30"
+                            roundedSize="0"
+                            hoverColor="black"
+                          />
+                          <TwoInRow>
+                            <NameOfUser>
+                              {manager.first_name} {manager.last_name}
+                            </NameOfUser>
+                            <EmailOfUser>{manager.email}</EmailOfUser>
+                          </TwoInRow>
+                          <div>
+                            <MenuListComposition
+                              userID={manager._id}
+                              companyID={companyData.companyData._id}
+                            />
+                          </div>
+                        </TwoInRow>
+                        <TwoInRow>
+                          <JobInfoUser>{manager.job_title}</JobInfoUser>
+                          <ManagerTag>#Manager</ManagerTag>
+                        </TwoInRow>
+                      </UserDiv>
+                    );
+                  })
+                : null
+            }
+
+            {
+              /////// regular users ///////
+              arrayOfUsers != null
+                ? arrayOfUsers.map((user) => {
+                    return (
+                      <UserDiv>
+                        <TwoInRow>
+                          <ReactRoundedImage
+                            image={profileBlank}
+                            roundedColor="#447FFF"
+                            imageWidth="30"
+                            imageHeight="30"
+                            roundedSize="0"
+                            hoverColor="black"
+                          />
+                          <TwoInRow>
+                            <NameOfUser>
+                              {user.first_name} {user.last_name}
+                            </NameOfUser>
+                            <EmailOfUser>{user.email}</EmailOfUser>
+                          </TwoInRow>
+                          <div>
+                            <MenuListComposition
+                              userID={user._id}
+                              companyID={companyData.companyData._id}
+                            />
+                          </div>
+                        </TwoInRow>
+                        <JobInfoUser>{user.job_title}</JobInfoUser>
+                      </UserDiv>
+                    );
+                  })
+                : null
+            }
           </UsersListDiv>
         </TwoInRow>
       </Wrapper>

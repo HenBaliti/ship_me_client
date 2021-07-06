@@ -52,7 +52,7 @@ export const updateUser =
     }
   };
 
-//Get User Data
+//Get User Data By Token
 export const getUserData = () => async (dispatch) => {
   try {
     dispatch({ type: GET_USER_DATA_REQ });

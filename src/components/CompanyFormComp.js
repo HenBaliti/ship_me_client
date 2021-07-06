@@ -74,7 +74,7 @@ const CompanyForm = (props) => {
       )
     );
     if (isUpdated) {
-      dispatch(getCompanyData(company.companyID)); ////////// -- Need to Pass here the companie ID !!!!!!!!!
+      dispatch(getCompanyData(company.companyID));
     }
   };
 

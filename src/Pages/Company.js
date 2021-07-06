@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CompanyForm from "../components/CompanyFormComp";
 import Navbar from "../components/Navbar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getCompanyData } from "../state/actions/companiesActions";
 
 const CompanyPage = () => {
   //Redux - Getting User Data
   const { companyData, error } = useSelector((state) => state.GetCompanyData);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCompanyData(companyData.companyData._id));
+  }, []);
+
   if (!companyData) {
-    return <div>Loading....</div>;
+    return <div>Loading...</div>;
   }
 
   return (

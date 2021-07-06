@@ -12,6 +12,7 @@ import {
 } from "./common";
 import { Marginer } from "../marginer";
 import { useHistory } from "react-router-dom";
+import { getAllUsersOfCompany } from "../../state/actions/accountActions";
 
 export function CompanyChooseForm(props) {
   //Redux - dispatch
@@ -37,6 +38,7 @@ export function CompanyChooseForm(props) {
 
   const submitCompany = () => {
     dispatch(getCompanyData(companyChoose));
+    dispatch(getAllUsersOfCompany(companyChoose)); ////////////////////////
     history.push("/");
   };
 

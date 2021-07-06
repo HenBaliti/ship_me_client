@@ -8,6 +8,12 @@ import {
   updateCompanyReducer,
 } from "./reducer/companiesReducers";
 import { getUserDataReducers, updateUserReducer } from "./reducer/userReducer";
+import {
+  createNewUserCompanyReducer,
+  deleteUserReducer,
+  getAllUsersReducer,
+  getUserDataByIDReducer,
+} from "./reducer/accountReducer";
 
 const appReducer = combineReducers({
   LoginAuth: loginReducer,
@@ -17,6 +23,10 @@ const appReducer = combineReducers({
   UpdateUserProfile: updateUserReducer,
   GetUserData: getUserDataReducers,
   UpdateCompany: updateCompanyReducer,
+  GetAllUsersCompany: getAllUsersReducer,
+  CreateNewUserCompany: createNewUserCompanyReducer,
+  RemoveUser: deleteUserReducer,
+  GetUserDataByID: getUserDataByIDReducer,
 });
 
 const shipMeState = (state, action) => {

@@ -8,6 +8,7 @@ import CompaniesPage from "./Pages/Companies";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NewUserPage from "./Pages/NewUser";
 import NewCompanyPage from "./Pages/NewCompany";
+import EditUserCompany from "./Pages/EditUserCompany";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/companies" component={CompaniesPage} />
           <Route exact path="/" component={HomePage} />
           <Route exact path="/auth" component={AccountBox} />
+          <Route exact path="/editUser" component={EditUserCompany} />
         </Switch>
       </Router>
     </div>
