@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NewUserPage from "./Pages/NewUser";
 import NewCompanyPage from "./Pages/NewCompany";
 import EditUserCompany from "./Pages/EditUserCompany";
+import EditCompanyPage from "./Pages/EditCompanyPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/auth" component={AccountBox} />
           <Route exact path="/editUser" component={EditUserCompany} />
+          <Route exact path="/editCompany" component={EditCompanyPage} />
         </Switch>
       </Router>
     </div>

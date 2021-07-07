@@ -25,6 +25,9 @@ export const SelectCustome = styled.select`
 export const ProfileContainer = styled.div`
   margin-top: 50px;
 `;
+export const Marginer = styled.div`
+  margin-bottom: 60px;
+`;
 export const FrameForm = styled.div`
   padding: 0em 20em;
 `;

@@ -3,6 +3,9 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { loginReducer, registerReducer } from "./reducer/authReducer";
 import {
+  createNewCompanyReducer,
+  deleteCompanyReducer,
+  getAllCompaniesReducer,
   getCompaniesReducer,
   getCompanyDataReducer,
   updateCompanyReducer,
@@ -27,6 +30,9 @@ const appReducer = combineReducers({
   CreateNewUserCompany: createNewUserCompanyReducer,
   RemoveUser: deleteUserReducer,
   GetUserDataByID: getUserDataByIDReducer,
+  RemoveCompany: deleteCompanyReducer,
+  GetAllCompanies: getAllCompaniesReducer,
+  CreateNewCompany: createNewCompanyReducer,
 });
 
 const shipMeState = (state, action) => {

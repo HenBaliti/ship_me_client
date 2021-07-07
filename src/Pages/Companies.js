@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import CustomizedTables from "../components/TabelCustComp";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCompanies } from "../state/actions/companiesActions";
+import { Marginer } from "./commonPages";
 
 const CompaniesPage = () => {
+  //Redux - dispatch
+  const dispatch = useDispatch();
+  const { arrayOfCompanies } = useSelector((state) => state.GetAllCompanies);
+
+  useEffect(() => {
+    dispatch(getAllCompanies());
+  }, []);
+
+  if (!arrayOfCompanies) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <Navbar />
@@ -19,7 +34,10 @@ const CompaniesPage = () => {
         </WrapRowSpace>
         <br></br>
         <br></br>
-        <CustomizedTables></CustomizedTables>
+        <CustomizedTables
+          arrayOfCompanies={arrayOfCompanies}
+        ></CustomizedTables>
+        <Marginer></Marginer>
       </CompaniesContainer>
     </div>
   );

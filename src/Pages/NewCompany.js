@@ -1,12 +1,12 @@
 import React from "react";
-import CompanyForm from "../components/CompanyFormComp";
+import NewCompanyFormComp from "../components/NewCompanyFormComp";
 import Navbar from "../components/Navbar";
 
 const NewCompanyPage = () => {
   return (
     <div>
       <Navbar />
-      <CompanyForm></CompanyForm>
+      <NewCompanyFormComp></NewCompanyFormComp>
     </div>
   );
 };

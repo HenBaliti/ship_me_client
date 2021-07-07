@@ -6,8 +6,18 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+  deleteCompanyAction,
+  getAllCompanies,
+  getCompanyData,
+} from "../state/actions/companiesActions";
 
-export default function MenuListCompositionCompany() {
+export default function MenuListCompositionCompany(props) {
+  let history = useHistory();
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -21,6 +31,18 @@ export default function MenuListCompositionCompany() {
     }
 
     setOpen(false);
+  };
+
+  const handleEditCompany = (event) => {
+    dispatch(getCompanyData(props.companyID));
+    handleClose(event);
+    history.push("/editCompany");
+  };
+
+  const handleDeleteCompany = (event) => {
+    dispatch(deleteCompanyAction(props.companyID));
+    handleClose(event);
+    dispatch(getAllCompanies());
   };
 
   function handleListKeyDown(event) {
@@ -73,9 +95,12 @@ export default function MenuListCompositionCompany() {
                     id="menu-list-grow"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={handleEditCompany}>
+                      Edit Company
+                    </MenuItem>
+                    <MenuItem onClick={handleDeleteCompany}>
+                      Delete Company
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
