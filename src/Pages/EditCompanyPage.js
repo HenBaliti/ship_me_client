@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
 import EditCompanyForm from "../components/EditCompanyFormComp";
 import Navbar from "../components/Navbar";
-import { useDispatch, useSelector } from "react-redux";
-import { getCompanyData } from "../state/actions/companiesActions";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const EditCompanyPage = () => {
   //Redux - Getting User Data
-  const { companyData, error } = useSelector((state) => state.GetCompanyData);
+  const { companyData } = useSelector((state) => state.GetCompanyData);
+  let history = useHistory();
+  const { isAuth } = useSelector((state) => state.LoginAuth);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!isAuth) {
+      history.push("/auth");
+    }
+  }, []);
 
   if (!companyData) {
     return <div>Loading...</div>;

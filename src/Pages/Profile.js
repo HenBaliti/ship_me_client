@@ -3,15 +3,24 @@ import CompUserForm from "../components/UserFormComp";
 import Navbar from "../components/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../state/actions/userActions";
+import { useHistory } from "react-router-dom";
 
 const ProfilePage = () => {
   //Redux - Getting User Data
   const { userData, error } = useSelector((state) => state.GetUserData);
+  let history = useHistory();
+  const { isAuth } = useSelector((state) => state.LoginAuth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserData(userData._id));
+    if (userData) {
+      dispatch(getUserData(userData._id));
+    }
+
+    if (!isAuth) {
+      history.push("/auth");
+    }
   }, []);
 
   if (!userData) {

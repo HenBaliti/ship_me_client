@@ -32,7 +32,6 @@ const TopContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 1.8em;
   padding-bottom: 5em;
 `;
 
@@ -46,12 +45,8 @@ const BackDrop = styled(motion.div)`
   transform: rotate(60deg);
   top: -290px;
   left: -70px;
-  background: rgb(68, 127, 255);
-  background: linear-gradient(
-    58deg,
-    rgba(68, 127, 255) 20%,
-    rgba(68, 127, 255, 1) 100%
-  );
+  background: #096f9f;
+  background: linear-gradient(58deg, #096f9f 20%, #096f9f 100%);
 `;
 
 const HeaderContainer = styled.div`

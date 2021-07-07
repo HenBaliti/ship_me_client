@@ -14,6 +14,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../../state/actions/authActions";
 import { getUserData } from "../../state/actions/userActions";
 import { getCompanyData } from "../../state/actions/companiesActions";
+import {
+  validateEmail,
+  validateFirstName,
+  validateLastName,
+  validatePhone,
+  validatePassword,
+  validateJobTitle,
+} from "../../util/formCheck";
 
 export function SignupForm(props) {
   //Redux - dispatch
@@ -33,6 +41,60 @@ export function SignupForm(props) {
     userAvatar: "",
     job_title: "",
   });
+  const [errorMessage, setErrorMessage] = useState({
+    firstNameMessage: "",
+    lastNameMessage: "",
+    emailMessage: "",
+    phoneMessage: "",
+    passwordMessage: "",
+    jobTitleMessage: "",
+  });
+
+  //-- Validate Form --
+
+  const validateDetails = () => {
+    const vEmail = validateEmail(newuser.email);
+    const vFirstName = validateFirstName(newuser.first_name);
+    const vLastName = validateLastName(newuser.last_name);
+    const vPhone = validatePhone(newuser.phone);
+    const vPassword = validatePassword(newuser.password);
+    const vJobTitle = validateJobTitle(newuser.job_title);
+
+    console.log(vFirstName);
+    console.log(vLastName);
+    console.log(vJobTitle);
+    console.log(vEmail);
+    console.log(vPhone);
+    console.log(vPassword);
+
+    messagesErrors(vEmail, vFirstName, vLastName, vPhone, vPassword, vJobTitle);
+    return (
+      vEmail && vFirstName && vLastName && vPhone && vPassword && vJobTitle
+    );
+  };
+
+  const messagesErrors = (
+    vEmail,
+    vFirstName,
+    vLastName,
+    vPhone,
+    vPassword,
+    vJobTitle
+  ) => {
+    if (vEmail && vPassword && vFirstName && vLastName && vPhone) {
+      setErrorMessage({
+        ...errorMessage,
+        jobTitleMessage: "",
+      });
+    } else {
+      setErrorMessage({
+        ...errorMessage,
+        jobTitleMessage:
+          "Please fill all the fields and enter a valid information",
+      });
+    }
+    console.log(errorMessage);
+  };
 
   useEffect(() => {
     if (isAuth) {
@@ -48,16 +110,19 @@ export function SignupForm(props) {
   };
 
   const submitRegister = () => {
-    dispatch(
-      register(
-        newuser.first_name,
-        newuser.last_name,
-        newuser.email,
-        newuser.phone,
-        newuser.password,
-        newuser.job_title
-      )
-    );
+    if (!validateDetails()) return;
+    else {
+      dispatch(
+        register(
+          newuser.first_name,
+          newuser.last_name,
+          newuser.email,
+          newuser.phone,
+          newuser.password,
+          newuser.job_title
+        )
+      );
+    }
   };
 
   return (
@@ -72,6 +137,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, first_name: data.target.value });
           }}
         />
+
         <Input
           type="text"
           placeholder="Last Name"
@@ -80,6 +146,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, last_name: data.target.value });
           }}
         />
+
         <Input
           type="text"
           placeholder="Job Title"
@@ -96,6 +163,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, email: data.target.value });
           }}
         />
+
         <Input
           type="phone"
           placeholder="050-123-4567"
@@ -105,6 +173,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, phone: data.target.value });
           }}
         />
+
         <Input
           type="password"
           placeholder="Password"
@@ -119,6 +188,9 @@ export function SignupForm(props) {
           placeholder="Choose Picture"
           onChange={onChangeFilePic}
         />
+        <span style={{ color: "red", fontSize: 13 }}>
+          {errorMessage.jobTitleMessage}
+        </span>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
       <SubmitButton onClick={submitRegister}>Signup</SubmitButton>

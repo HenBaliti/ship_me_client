@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import CustomizedTables from "../components/TabelCustComp";
 import SearchIcon from "@material-ui/icons/Search";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCompanies } from "../state/actions/companiesActions";
@@ -12,9 +12,15 @@ const CompaniesPage = () => {
   //Redux - dispatch
   const dispatch = useDispatch();
   const { arrayOfCompanies } = useSelector((state) => state.GetAllCompanies);
+  let history = useHistory();
+  const { isAuth, userObj } = useSelector((state) => state.LoginAuth);
 
   useEffect(() => {
-    dispatch(getAllCompanies());
+    if (!isAuth) {
+      history.push("/auth");
+    } else {
+      dispatch(getAllCompanies());
+    }
   }, []);
 
   if (!arrayOfCompanies) {
@@ -24,30 +30,37 @@ const CompaniesPage = () => {
   return (
     <div>
       <Navbar />
-      <CompaniesContainer>
-        <WrapRowSpace>
-          <SearchBarCompanies className="ui search">
-            <SearchBarInput type="text" placeholder="Search Users" />
-            <SearchIcon />
-          </SearchBarCompanies>
-          <Button to="/createnewcompany">Add New Company</Button>
-        </WrapRowSpace>
-        <br></br>
-        <br></br>
-        <CustomizedTables
-          arrayOfCompanies={arrayOfCompanies}
-        ></CustomizedTables>
-        <Marginer></Marginer>
-      </CompaniesContainer>
+      {userObj.super_admin ? (
+        <CompaniesContainer>
+          <WrapRowSpace>
+            <SearchBarCompanies className="ui search">
+              <SearchBarInput type="text" placeholder="Search Users" />
+              <SearchIcon />
+            </SearchBarCompanies>
+            <Button to="/createnewcompany">Add New Company</Button>
+          </WrapRowSpace>
+          <br></br>
+          <br></br>
+          <CustomizedTables
+            arrayOfCompanies={arrayOfCompanies}
+          ></CustomizedTables>
+          <Marginer></Marginer>
+        </CompaniesContainer>
+      ) : (
+        <NotAuth>
+          You are not authorized to be here .<br></br>
+          You Need to be super admin.
+        </NotAuth>
+      )}
     </div>
   );
 };
 
+export default CompaniesPage;
+
 const CompaniesContainer = styled.div`
   margin-top: 30px;
 `;
-
-export default CompaniesPage;
 
 export const WrapRowSpace = styled.form`
   width: 90%;
@@ -86,4 +99,12 @@ export const searchLogo = styled.i`
 
 export const SearchBarCompanies = styled.div`
   margin-left: 30px;
+`;
+
+export const NotAuth = styled.div`
+  margin-top: 100px;
+  align-items: center;
+  padding: 0 20rem;
+  font-size: 20px;
+  font-weight: 600;
 `;
