@@ -19,15 +19,17 @@ import {
   getCompanyData,
   updateCompany,
 } from "../state/actions/companiesActions";
+import { useHistory } from "react-router-dom";
 
-const CompanyForm = (props) => {
+const EditCompanyForm = (props) => {
   //Redux - dispatch
   const dispatch = useDispatch();
-  const { updatedCompany, loading, error, isUpdated } = useSelector(
-    (state) => state.UpdateCompany
-  );
 
-  const { companyData } = useSelector((state) => state.GetCompanyData);
+  let history = useHistory();
+
+  const { companyData, primaryManagerData } = useSelector(
+    (state) => state.GetCompanyData
+  );
 
   const [company, setCompany] = useState({
     companyID: props.companyID,
@@ -44,12 +46,6 @@ const CompanyForm = (props) => {
     email: props.company_email,
     primary_contact_id: props.primary_contact_id,
   });
-
-  useEffect(() => {
-    if (error) {
-      console.log("There is and error with update company");
-    }
-  }, [isUpdated, error]);
 
   const onChangeFilePic = (e) => {
     setCompany({ ...company, avatarCompany: e.target.files[0] });
@@ -73,9 +69,7 @@ const CompanyForm = (props) => {
         company.primary_contact_id
       )
     );
-    if (isUpdated) {
-      dispatch(getCompanyData(company.companyID));
-    }
+    history.push("/companies");
   };
 
   return (
@@ -179,24 +173,6 @@ const CompanyForm = (props) => {
           <br></br>
           <br></br>
 
-          <Input
-            disabled="true"
-            type="text"
-            placeholder="Primary Contact Name"
-            value={`${companyData.primaryManagerData.first_name} ${companyData.primaryManagerData.last_name}`}
-          />
-          <Input
-            disabled="true"
-            type="phone"
-            placeholder="Primary Contact Phone"
-            value={companyData.primaryManagerData.phone}
-          />
-          <Input
-            disabled="true"
-            type="text"
-            placeholder="Primary Contact Job Title"
-            value={companyData.primaryManagerData.job_title}
-          />
           <Button type="submit">Save Changes</Button>
         </FormContainer>
       </FrameForm>
@@ -204,4 +180,4 @@ const CompanyForm = (props) => {
   );
 };
 
-export default CompanyForm;
+export default EditCompanyForm;

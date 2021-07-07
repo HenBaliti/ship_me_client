@@ -8,6 +8,7 @@ import {
   InputName,
   WrapRow,
   InputFile,
+  SelectCustome,
 } from "../Pages/commonPages";
 import ReactRoundedImage from "react-rounded-image";
 import profileBlank from "../images/blank-profile-picture.png";
@@ -16,52 +17,58 @@ import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData, updateUser } from "../state/actions/userActions";
 import { login } from "../state/actions/authActions";
+import {
+  createNewUserAction,
+  getAllUsersOfCompany,
+} from "../state/actions/accountActions";
+import { useHistory } from "react-router-dom";
 
-const CompUserForm = (props) => {
+const NewCompUserForm = (props) => {
+  let history = useHistory();
+
   //Redux - dispatch
   const dispatch = useDispatch();
-  const { updatedUser, loading, error, isUpdated } = useSelector(
-    (state) => state.UpdateUserProfile
+  const { isCreated, loading } = useSelector(
+    (state) => state.CreateNewUserCompany
   );
+  const { companyData } = useSelector((state) => state.GetCompanyData);
 
   const [newuser, setNewUser] = useState({
-    userID: props.userID,
-    firstName: props.firstName,
-    lastName: props.lastName,
-    jobTitle: props.jobTitle,
-    email: props.email,
-    phone: props.phone,
-    oldPassword: props.password,
+    companyID: props.companyID,
+    firstName: "",
+    lastName: "",
+    jobTitle: "",
+    email: "",
+    phone: "",
     newPassword: "",
-    userAvatar: props.avatar,
+    userAvatar: "",
+    typeUser: "User",
   });
-
-  useEffect(() => {
-    if (error) {
-      console.log("There is and error with update user");
-    }
-  }, [isUpdated, error]);
 
   const onChangeFilePic = (e) => {
     setNewUser({ ...newuser, userAvatar: e.target.files[0] });
   };
 
-  const submitChanges = () => {
+  const handleChange = (event) => {
+    setNewUser({ ...newuser, typeUser: event.target.value });
+  };
+
+  const createNewUser = () => {
     dispatch(
-      updateUser(
-        newuser.userID,
+      createNewUserAction(
+        newuser.companyID,
         newuser.firstName,
         newuser.lastName,
-        newuser.jobTitle,
         newuser.email,
         newuser.phone,
-        newuser.oldPassword,
-        newuser.newPassword
+        newuser.newPassword,
+        newuser.jobTitle,
+        newuser.typeUser
       )
     );
-    if (isUpdated) {
-      dispatch(getUserData());
-    }
+    dispatch(getAllUsersOfCompany(companyData.companyData._id)); /////////
+    history.push("/account");
+    // }
   };
 
   return (
@@ -139,28 +146,25 @@ const CompUserForm = (props) => {
               setNewUser({ ...newuser, email: data.target.value });
             }}
           />
-
-          <Input
-            disabled="true"
-            type="password"
-            placeholder="Old Password"
-            value="12345678"
-          />
-
           <Input
             type="password"
-            placeholder="New Password"
+            placeholder="Choose Password"
             value={newuser.newPassword}
             onChange={(data) => {
               setNewUser({ ...newuser, newPassword: data.target.value });
             }}
           />
 
-          <Button onClick={submitChanges}>Save Changes</Button>
+          <SelectCustome onChange={handleChange} value={newuser.typeUser}>
+            <option value="User">User</option>
+            <option value="Manager">Manager</option>;
+          </SelectCustome>
+
+          <Button onClick={createNewUser}>Create New User</Button>
         </FormContainer>
       </FrameForm>
     </ProfileContainer>
   );
 };
 
-export default CompUserForm;
+export default NewCompUserForm;

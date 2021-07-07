@@ -1,23 +1,18 @@
 import React, { useEffect } from "react";
-import CompUserForm from "../components/UserFormComp";
+import EditCompUserForm from "../components/EditUserFormComp";
 import Navbar from "../components/Navbar";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserData } from "../state/actions/userActions";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const ProfilePage = () => {
+const EditUserCompany = () => {
   //Redux - Getting User Data
-  const { userData, error } = useSelector((state) => state.GetUserData);
+  const { userData, loading, error } = useSelector(
+    (state) => state.GetUserDataByID
+  );
   let history = useHistory();
   const { isAuth } = useSelector((state) => state.LoginAuth);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    if (userData) {
-      dispatch(getUserData(userData._id));
-    }
-
     if (!isAuth) {
       history.push("/auth");
     }
@@ -30,7 +25,7 @@ const ProfilePage = () => {
   return (
     <div>
       <Navbar />
-      <CompUserForm
+      <EditCompUserForm
         userID={userData._id}
         firstName={userData.first_name}
         lastName={userData.last_name}
@@ -39,9 +34,9 @@ const ProfilePage = () => {
         phone={userData.phone}
         password={userData.password}
         userAvatar={userData.avatar}
-      ></CompUserForm>
+      ></EditCompUserForm>
     </div>
   );
 };
 
-export default ProfilePage;
+export default EditUserCompany;

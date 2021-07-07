@@ -8,10 +8,13 @@ import CompaniesPage from "./Pages/Companies";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NewUserPage from "./Pages/NewUser";
 import NewCompanyPage from "./Pages/NewCompany";
+import EditUserCompany from "./Pages/EditUserCompany";
+import EditCompanyPage from "./Pages/EditCompanyPage";
+import styled from "styled-components";
 
 function App() {
   return (
-    <div>
+    <AppUIDiv>
       <Router>
         <Switch>
           <Route exact path="/profile" component={ProfilePage} />
@@ -22,10 +25,18 @@ function App() {
           <Route exact path="/companies" component={CompaniesPage} />
           <Route exact path="/" component={HomePage} />
           <Route exact path="/auth" component={AccountBox} />
+          <Route exact path="/editUser" component={EditUserCompany} />
+          <Route exact path="/editCompany" component={EditCompanyPage} />
         </Switch>
       </Router>
-    </div>
+    </AppUIDiv>
   );
 }
 
 export default App;
+
+export const AppUIDiv = styled.div`
+  padding: 0;
+  margin: 0;
+  width: 100%;
+`;

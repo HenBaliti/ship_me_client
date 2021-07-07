@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   BoldLink,
   BoxContainer,
@@ -11,7 +11,17 @@ import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../state/actions/authActions";
+import { login, register } from "../../state/actions/authActions";
+import { getUserData } from "../../state/actions/userActions";
+import { getCompanyData } from "../../state/actions/companiesActions";
+import {
+  validateEmail,
+  validateFirstName,
+  validateLastName,
+  validatePhone,
+  validatePassword,
+  validateJobTitle,
+} from "../../util/formCheck";
 
 export function SignupForm(props) {
   //Redux - dispatch
@@ -31,46 +41,88 @@ export function SignupForm(props) {
     userAvatar: "",
     job_title: "",
   });
+  const [errorMessage, setErrorMessage] = useState({
+    firstNameMessage: "",
+    lastNameMessage: "",
+    emailMessage: "",
+    phoneMessage: "",
+    passwordMessage: "",
+    jobTitleMessage: "",
+  });
+
+  //-- Validate Form --
+
+  const validateDetails = () => {
+    const vEmail = validateEmail(newuser.email);
+    const vFirstName = validateFirstName(newuser.first_name);
+    const vLastName = validateLastName(newuser.last_name);
+    const vPhone = validatePhone(newuser.phone);
+    const vPassword = validatePassword(newuser.password);
+    const vJobTitle = validateJobTitle(newuser.job_title);
+
+    console.log(vFirstName);
+    console.log(vLastName);
+    console.log(vJobTitle);
+    console.log(vEmail);
+    console.log(vPhone);
+    console.log(vPassword);
+
+    messagesErrors(vEmail, vFirstName, vLastName, vPhone, vPassword, vJobTitle);
+    return (
+      vEmail && vFirstName && vLastName && vPhone && vPassword && vJobTitle
+    );
+  };
+
+  const messagesErrors = (
+    vEmail,
+    vFirstName,
+    vLastName,
+    vPhone,
+    vPassword,
+    vJobTitle
+  ) => {
+    if (vEmail && vPassword && vFirstName && vLastName && vPhone) {
+      setErrorMessage({
+        ...errorMessage,
+        jobTitleMessage: "",
+      });
+    } else {
+      setErrorMessage({
+        ...errorMessage,
+        jobTitleMessage:
+          "Please fill all the fields and enter a valid information",
+      });
+    }
+    console.log(errorMessage);
+  };
+
+  useEffect(() => {
+    if (isAuth) {
+      history.push("/");
+      dispatch(login(newuser.email, newuser.password));
+      dispatch(getUserData());
+      dispatch(getCompanyData(userObj.companies[0]));
+    }
+  }, [isAuth]);
 
   const onChangeFilePic = (e) => {
     setNewUser({ ...newuser, userAvatar: e.target.files[0] });
   };
 
   const submitRegister = () => {
-    dispatch(
-      register(
-        newuser.first_name,
-        newuser.last_name,
-        newuser.email,
-        newuser.phone,
-        newuser.password,
-        newuser.job_title
-      )
-    );
-    history.push("/");
-
-    // e.preventDefault();
-    // //Building the form Data - for sending to server
-    // const formData = new FormData();
-
-    // formData.append("first_name", newuser.first_name);
-    // formData.append("last_name", newuser.last_name);
-    // formData.append("email", newuser.email);
-    // formData.append("phone", newuser.phone);
-    // formData.append("password", newuser.password);
-    // formData.append("job_title", newuser.job_title);
-    // formData.append("userAvatar", newuser.userAvatar);
-
-    // axios
-    //   .post(`http://localhost:4000/users/signup`, newuser)
-    //   .then((res) => {
-    //     console.log("Successfully Registered\n");
-    //     console.log(res.data);
-    //     history.push("/");
-    //   })
-    //   .catch((error) =>
-    //     console.log("There was an error with login \n" + error)
-    //   );
+    if (!validateDetails()) return;
+    else {
+      dispatch(
+        register(
+          newuser.first_name,
+          newuser.last_name,
+          newuser.email,
+          newuser.phone,
+          newuser.password,
+          newuser.job_title
+        )
+      );
+    }
   };
 
   return (
@@ -85,6 +137,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, first_name: data.target.value });
           }}
         />
+
         <Input
           type="text"
           placeholder="Last Name"
@@ -93,6 +146,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, last_name: data.target.value });
           }}
         />
+
         <Input
           type="text"
           placeholder="Job Title"
@@ -109,6 +163,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, email: data.target.value });
           }}
         />
+
         <Input
           type="phone"
           placeholder="050-123-4567"
@@ -118,6 +173,7 @@ export function SignupForm(props) {
             setNewUser({ ...newuser, phone: data.target.value });
           }}
         />
+
         <Input
           type="password"
           placeholder="Password"
@@ -132,6 +188,9 @@ export function SignupForm(props) {
           placeholder="Choose Picture"
           onChange={onChangeFilePic}
         />
+        <span style={{ color: "red", fontSize: 13 }}>
+          {errorMessage.jobTitleMessage}
+        </span>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
       <SubmitButton onClick={submitRegister}>Signup</SubmitButton>

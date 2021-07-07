@@ -14,15 +14,17 @@ import profileBlank from "../images/blank-profile-picture.png";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData, updateUser } from "../state/actions/userActions";
-import { login } from "../state/actions/authActions";
+import { updateUser } from "../state/actions/userActions";
+import { getAllUsersOfCompany } from "../state/actions/accountActions";
+import { useHistory } from "react-router-dom";
 
-const CompUserForm = (props) => {
+const EditCompUserForm = (props) => {
+  let history = useHistory();
+
   //Redux - dispatch
   const dispatch = useDispatch();
-  const { updatedUser, loading, error, isUpdated } = useSelector(
-    (state) => state.UpdateUserProfile
-  );
+
+  const { companyData } = useSelector((state) => state.GetCompanyData);
 
   const [newuser, setNewUser] = useState({
     userID: props.userID,
@@ -33,14 +35,8 @@ const CompUserForm = (props) => {
     phone: props.phone,
     oldPassword: props.password,
     newPassword: "",
-    userAvatar: props.avatar,
+    userAvatar: props.userAvatar,
   });
-
-  useEffect(() => {
-    if (error) {
-      console.log("There is and error with update user");
-    }
-  }, [isUpdated, error]);
 
   const onChangeFilePic = (e) => {
     setNewUser({ ...newuser, userAvatar: e.target.files[0] });
@@ -59,9 +55,8 @@ const CompUserForm = (props) => {
         newuser.newPassword
       )
     );
-    if (isUpdated) {
-      dispatch(getUserData());
-    }
+    dispatch(getAllUsersOfCompany(companyData.companyData._id)); /////////
+    history.push("/account");
   };
 
   return (
@@ -163,4 +158,4 @@ const CompUserForm = (props) => {
   );
 };
 
-export default CompUserForm;
+export default EditCompUserForm;

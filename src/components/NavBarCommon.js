@@ -26,11 +26,12 @@ export const MenuLink2 = styled.a`
   text-align: center;
   text-decoration: none;
   color: black;
+  border-bottom: 2px solid white;
   transition: all 0.3s ease-in;
   font-size: 0.8rem;
   &:hover {
     color: #096f9f;
-    border-bottom: 5px solid #fff;
+    border-bottom: 2px solid black;
   }
 `;
 
@@ -46,7 +47,7 @@ export const MarginGrey = styled.div`
   padding: 0 2rem;
 `;
 export const Nav = styled.div`
-  padding: 0 2rem;
+  padding: 0 0rem;
   display: -webkit-inline-box;
   align-items: center;
   flex-wrap: wrap;
@@ -115,4 +116,13 @@ export const Hamburger = styled.div`
   @media (max-width: 768px) {
     display: flex;
   }
+`;
+
+export const ButtonLogOut = styled.button`
+  color: white;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid black;
+  border-radius: 3px;
 `;

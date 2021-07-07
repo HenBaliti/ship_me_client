@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  color: rgb(68, 127, 255);
+  color: #096f9f;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid rgb(68, 127, 255);
+  border: 2px solid #096f9f;
   border-radius: 3px;
 `;
 
@@ -53,7 +53,7 @@ export const MutedLink = styled.a`
 
 export const BoldLink = styled.a`
   font-size: 11px;
-  color: rgb(68, 127, 255);
+  color: #096f9f;
   font-weight: 500;
   text-decoration: none;
   margin: 0 4px;
@@ -76,7 +76,7 @@ export const Input = styled.input`
   }
   &:focus {
     outline: none;
-    border-bottom: 2px solid rgb(68, 127, 255);
+    border-bottom: 2px solid #096f9f;
   }
 `;
 
@@ -90,12 +90,8 @@ export const SubmitButton = styled.button`
   border-radius: 100px 100px 100px 100px;
   cursor: pointer;
   transition: all, 240ms ease-in-out;
-  background: rgb(68, 127, 255);
-  background: linear-gradient(
-    58deg,
-    rgba(68, 127, 255, 1) 20%,
-    rgba(68, 127, 255, 1) 100%
-  );
+  background: #096f9f;
+  background: linear-gradient(58deg, #096f9f 20%, #096f9f 100%);
   &:hover {
     filter: brightness(1.03);
   }

@@ -16,72 +16,55 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  createNewCompanyAction,
+  getAllCompanies,
   getCompanyData,
   updateCompany,
 } from "../state/actions/companiesActions";
+import { useHistory } from "react-router-dom";
 
-const CompanyForm = (props) => {
+const NewCompanyFormComp = (props) => {
+  let history = useHistory();
   //Redux - dispatch
   const dispatch = useDispatch();
-  const { updatedCompany, loading, error, isUpdated } = useSelector(
-    (state) => state.UpdateCompany
-  );
-
-  const { companyData } = useSelector((state) => state.GetCompanyData);
 
   const [company, setCompany] = useState({
-    companyID: props.companyID,
-    avatarCompany: props.avatar,
-    city: props.city,
-    companyAdress: props.address,
-    CompanyStateRes: props.CompanyStateRes,
-    zipCode: props.zipCode,
-    website: props.website,
-    managersCompany: props.managersCompany,
-    usersCompany: props.usersCompany,
-    companyName: props.company_name,
-    phone: props.company_phone,
-    email: props.company_email,
-    primary_contact_id: props.primary_contact_id,
+    avatarCompany: "",
+    city: "",
+    companyAdress: "",
+    CompanyStateRes: "",
+    zipCode: "",
+    website: "",
+    companyName: "",
+    phone: "",
+    email: "",
   });
 
-  useEffect(() => {
-    if (error) {
-      console.log("There is and error with update company");
-    }
-  }, [isUpdated, error]);
-
-  const onChangeFilePic = (e) => {
-    setCompany({ ...company, avatarCompany: e.target.files[0] });
-  };
-
-  const submitChanges = () => {
+  const createNewCompany = () => {
     dispatch(
-      updateCompany(
-        company.companyID,
-        company.avatar,
+      createNewCompanyAction(
         company.city,
         company.companyAdress,
         company.CompanyStateRes,
         company.zipCode,
         company.website,
-        company.managersCompany,
-        company.usersCompany,
         company.companyName,
         company.phone,
-        company.email,
-        company.primary_contact_id
+        company.email
       )
     );
-    if (isUpdated) {
-      dispatch(getCompanyData(company.companyID));
-    }
+    dispatch(getAllCompanies()); /////////
+    history.push("/companies");
+  };
+
+  const onChangeFilePic = (e) => {
+    setCompany({ ...company, avatarCompany: e.target.files[0] });
   };
 
   return (
     <ProfileContainer>
       <FrameForm>
-        <FormContainer onSubmit={submitChanges} encType="multipart/form-data">
+        <FormContainer encType="multipart/form-data">
           <WrapRow>
             <ReactRoundedImage
               image={profileBlank}
@@ -179,29 +162,11 @@ const CompanyForm = (props) => {
           <br></br>
           <br></br>
 
-          <Input
-            disabled="true"
-            type="text"
-            placeholder="Primary Contact Name"
-            value={`${companyData.primaryManagerData.first_name} ${companyData.primaryManagerData.last_name}`}
-          />
-          <Input
-            disabled="true"
-            type="phone"
-            placeholder="Primary Contact Phone"
-            value={companyData.primaryManagerData.phone}
-          />
-          <Input
-            disabled="true"
-            type="text"
-            placeholder="Primary Contact Job Title"
-            value={companyData.primaryManagerData.job_title}
-          />
-          <Button type="submit">Save Changes</Button>
+          <Button onClick={createNewCompany}>Create New Company</Button>
         </FormContainer>
       </FrameForm>
     </ProfileContainer>
   );
 };
 
-export default CompanyForm;
+export default NewCompanyFormComp;

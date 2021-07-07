@@ -1,23 +1,18 @@
 import React, { useEffect } from "react";
-import CompanyForm from "../components/CompanyFormComp";
+import EditCompanyForm from "../components/EditCompanyFormComp";
 import Navbar from "../components/Navbar";
-import { useSelector, useDispatch } from "react-redux";
-import { getCompanyData } from "../state/actions/companiesActions";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const CompanyPage = () => {
+const EditCompanyPage = () => {
   //Redux - Getting User Data
-  const { companyData, error } = useSelector((state) => state.GetCompanyData);
-
-  const dispatch = useDispatch();
+  const { companyData } = useSelector((state) => state.GetCompanyData);
   let history = useHistory();
   const { isAuth } = useSelector((state) => state.LoginAuth);
 
   useEffect(() => {
     if (!isAuth) {
       history.push("/auth");
-    } else {
-      dispatch(getCompanyData(companyData.companyData._id));
     }
   }, []);
 
@@ -28,7 +23,7 @@ const CompanyPage = () => {
   return (
     <div>
       <Navbar />
-      <CompanyForm
+      <EditCompanyForm
         companyID={companyData.companyData._id}
         avatar={companyData.companyData.avatar}
         city={companyData.companyData.city}
@@ -42,9 +37,9 @@ const CompanyPage = () => {
         company_phone={companyData.companyData.company_phone}
         company_email={companyData.companyData.company_email}
         primary_contact_id={companyData.companyData.primary_contact_id}
-      ></CompanyForm>
+      ></EditCompanyForm>
     </div>
   );
 };
 
-export default CompanyPage;
+export default EditCompanyPage;

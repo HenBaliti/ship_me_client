@@ -1,0 +1,9 @@
+//Update User
+export const UPDATE_USER_REQ = "UPDATE_USER_REQ";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAIL = "UPDATE_USER_FAIL";
+
+//Get User Data
+export const GET_USER_DATA_REQ = "Get_USER_DATA_REQ";
+export const GET_USER_DATA_SUCCESS = "GET_USER_DATA_SUCCESS";
+export const GET_USER_DATA_FAIL = "GET_USER_DATA_FAIL";

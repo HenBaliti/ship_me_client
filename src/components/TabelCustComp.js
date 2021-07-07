@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import ReactRoundedImage from "react-rounded-image";
 import profileBlank from "../../src/images/profile-company-blank.jpg";
 import { WrapRow } from "../Pages/commonPages";
+import MenuListCompositionCompany from "./DotsCompCompany";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -29,44 +30,7 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(id, companyName, phone, website, address, contactPhone) {
-  return { id, companyName, phone, website, address, contactPhone };
-}
-
-const rows = [
-  createData(
-    "123",
-    "Stam Company 1",
-    "0504022208",
-    "stam.co.il",
-    "Ktovet Stam 123",
-    "0504022208"
-  ),
-  createData(
-    "1234",
-    "Stam Company 1",
-    "0504022208",
-    "stam.co.il",
-    "Ktovet Stam 123",
-    "0504022208"
-  ),
-  createData(
-    "12345",
-    "Stam Company 1",
-    "0504022208",
-    "stam.co.il",
-    "Ktovet Stam 123",
-    "0504022208"
-  ),
-];
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
-
-export default function CustomizedTables() {
+export default function CustomizedTables(props) {
   return (
     <TableContainer component={Paper}>
       <Table size="small" aria-label="customized table">
@@ -77,15 +41,16 @@ export default function CustomizedTables() {
             <StyledTableCell>Phone</StyledTableCell>
             <StyledTableCell>Website</StyledTableCell>
             <StyledTableCell>Address</StyledTableCell>
-            <StyledTableCell>Contact Phone</StyledTableCell>
+            <StyledTableCell>Primary Contact Name</StyledTableCell>
+            <StyledTableCell>Primary Contact Phone</StyledTableCell>
             <StyledTableCell>Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.id}>
+          {props.arrayOfCompanies.map((row) => (
+            <StyledTableRow key={row._id}>
               <StyledTableCell component="th" scope="row">
-                <b>{row.id}</b>
+                <b>{row._id}</b>
               </StyledTableCell>
               <StyledTableCell>
                 <WrapRow>
@@ -98,14 +63,18 @@ export default function CustomizedTables() {
                     hoverColor="black"
                   />
                   <div style={{ marginLeft: 10 }}>
-                    <b>{row.companyName}</b>
+                    <b>{row.name}</b>
                   </div>
                 </WrapRow>
               </StyledTableCell>
-              <StyledTableCell>{row.phone}</StyledTableCell>
+              <StyledTableCell>{row.company_phone}</StyledTableCell>
               <StyledTableCell>{row.website}</StyledTableCell>
               <StyledTableCell>{row.address}</StyledTableCell>
-              <StyledTableCell>{row.contactPhone}</StyledTableCell>
+              <StyledTableCell>ssssssssss</StyledTableCell>
+              <StyledTableCell>ssssssssss</StyledTableCell>
+              <StyledTableCell>
+                <MenuListCompositionCompany companyID={row._id} />
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

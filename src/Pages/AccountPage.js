@@ -1,88 +1,135 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ReactRoundedImage from "react-rounded-image";
 import profileBlank from "../../src/images/blank-profile-picture.png";
 import SearchIcon from "@material-ui/icons/Search";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import MenuListComposition from "../components/DotsComp";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsersOfCompany } from "../state/actions/accountActions";
+import { NotAuth } from "./Companies";
 
 const AccountPage = () => {
+  let history = useHistory();
+  const { isAuth, userObj } = useSelector((state) => state.LoginAuth);
+  //Redux - dispatch
+  const dispatch = useDispatch();
+  const { arrayOfManagers, loading, error, arrayOfUsers } = useSelector(
+    (state) => state.GetAllUsersCompany
+  );
+
+  const { companyData } = useSelector((state) => state.GetCompanyData);
+
+  useEffect(() => {
+    if (!isAuth) {
+      history.push("/auth");
+    } else {
+      dispatch(getAllUsersOfCompany(companyData.companyData._id));
+    }
+  }, []);
+
   return (
     <div>
       <Navbar />
-      <Wrapper>
-        <TwoInRow>
-          <ShipmentsFutureDiv>
-            <WillBeH1>Here Will Be Something...</WillBeH1>
-          </ShipmentsFutureDiv>
-          <LineDivider></LineDivider>
-          <UsersListDiv>
-            <Title>Users</Title>
-            <TwoInRow>
-              <SearchBarUsers className="ui search">
-                <SearchBarInput type="text" placeholder="Search Users" />
-                <SearchIcon />
-              </SearchBarUsers>
-              <Button to="/createnewuser">Add User</Button>
-            </TwoInRow>
-            <UserDiv>
+      {companyData.companyData.managers.includes(userObj._id) ? (
+        <Wrapper>
+          <TwoInRow>
+            <ShipmentsFutureDiv>
+              <WillBeH1>Here Will Be Something...</WillBeH1>
+            </ShipmentsFutureDiv>
+            <LineDivider></LineDivider>
+            <UsersListDiv>
+              <Title>Users</Title>
               <TwoInRow>
-                <ReactRoundedImage
-                  image={profileBlank}
-                  roundedColor="#447FFF"
-                  imageWidth="30"
-                  imageHeight="30"
-                  roundedSize="0"
-                  hoverColor="black"
-                />
-                <TwoInRow>
-                  <NameOfUser>Stam Shem</NameOfUser>
-                  <EmailOfUser>stam@gmail.com</EmailOfUser>
-                </TwoInRow>
-                <div>asdasd</div>
+                <SearchBarUsers className="ui search">
+                  <SearchBarInput type="text" placeholder="Search Users" />
+                  <SearchIcon />
+                </SearchBarUsers>
+                <Button to="/createnewuser">Add User</Button>
               </TwoInRow>
-              <TwoInRow>
-                <JobInfoUser>stammmmmm</JobInfoUser>
-                <ManagerTag>#Manager</ManagerTag>
-              </TwoInRow>
-            </UserDiv>
-            <UserDiv>
-              <TwoInRow>
-                <ReactRoundedImage
-                  image={profileBlank}
-                  roundedColor="#447FFF"
-                  imageWidth="30"
-                  imageHeight="30"
-                  roundedSize="0"
-                  hoverColor="black"
-                />
-                <TwoInRow>
-                  <NameOfUser>Stam Shem</NameOfUser>
-                  <EmailOfUser>stam@gmail.com</EmailOfUser>
-                </TwoInRow>
-              </TwoInRow>
-              <JobInfoUser>stammmmmm</JobInfoUser>
-            </UserDiv>
-            <UserDiv>
-              <TwoInRow>
-                <ReactRoundedImage
-                  image={profileBlank}
-                  roundedColor="#447FFF"
-                  imageWidth="30"
-                  imageHeight="30"
-                  roundedSize="0"
-                  hoverColor="black"
-                />
-                <TwoInRow>
-                  <NameOfUser>Stam Shem</NameOfUser>
-                  <EmailOfUser>stam@gmail.com</EmailOfUser>
-                </TwoInRow>
-              </TwoInRow>
-              <JobInfoUser>stammmmmm</JobInfoUser>
-            </UserDiv>
-          </UsersListDiv>
-        </TwoInRow>
-      </Wrapper>
+
+              {
+                /////// managers ///////
+                arrayOfManagers != null
+                  ? arrayOfManagers.map((manager) => {
+                      return (
+                        <UserDiv>
+                          <TwoInRow>
+                            <ReactRoundedImage
+                              image={profileBlank}
+                              roundedColor="#447FFF"
+                              imageWidth="30"
+                              imageHeight="30"
+                              roundedSize="0"
+                              hoverColor="black"
+                            />
+                            <TwoInRow>
+                              <NameOfUser>
+                                {manager.first_name} {manager.last_name}
+                              </NameOfUser>
+                              <EmailOfUser>{manager.email}</EmailOfUser>
+                            </TwoInRow>
+                            <div>
+                              <MenuListComposition
+                                userID={manager._id}
+                                companyID={companyData.companyData._id}
+                              />
+                            </div>
+                          </TwoInRow>
+                          <TwoInRow>
+                            <JobInfoUser>{manager.job_title}</JobInfoUser>
+                            <ManagerTag>#Manager</ManagerTag>
+                          </TwoInRow>
+                        </UserDiv>
+                      );
+                    })
+                  : null
+              }
+
+              {
+                /////// regular users ///////
+                arrayOfUsers != null
+                  ? arrayOfUsers.map((user) => {
+                      return (
+                        <UserDiv>
+                          <TwoInRow>
+                            <ReactRoundedImage
+                              image={profileBlank}
+                              roundedColor="#447FFF"
+                              imageWidth="30"
+                              imageHeight="30"
+                              roundedSize="0"
+                              hoverColor="black"
+                            />
+                            <TwoInRow>
+                              <NameOfUser>
+                                {user.first_name} {user.last_name}
+                              </NameOfUser>
+                              <EmailOfUser>{user.email}</EmailOfUser>
+                            </TwoInRow>
+                            <div>
+                              <MenuListComposition
+                                userID={user._id}
+                                companyID={companyData.companyData._id}
+                              />
+                            </div>
+                          </TwoInRow>
+                          <JobInfoUser>{user.job_title}</JobInfoUser>
+                        </UserDiv>
+                      );
+                    })
+                  : null
+              }
+            </UsersListDiv>
+          </TwoInRow>
+        </Wrapper>
+      ) : (
+        <NotAuth>
+          You are not authorized to be here .<br></br>
+          You Need to be a manager of a company.
+        </NotAuth>
+      )}
     </div>
   );
 };
